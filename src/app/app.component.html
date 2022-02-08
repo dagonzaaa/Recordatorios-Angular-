@@ -1,0 +1,35 @@
+<header>
+  <img src="../assets/header.jfif" alt="">
+  <h1>TAREAS</h1>
+</header>
+<div id="app">
+    <div class="añadir">
+      <button *ngIf="!anadiendo" (click)="anade()" class="añadir_tarea">Añadir Tarea</button>
+        <div *ngIf="anadiendo" >
+            <span (click)="anade()">x</span><br>
+            <input type="text" [(ngModel)]="descripcion" (keyup.enter)="agregar()" placeholder="Descripcion">
+        </div>
+    </div>
+    <div class="contenedor_lista">
+      <ul>
+        <li [ngClass]="{'tarea': !tar.completada, 'tareaCompletada':tar.completada}" *ngFor="let tar of tareas; let indice=index" class="tarea">
+          <h3>{{tar.descripcion}}</h3>
+          <p>{{tar.tiempo}} minutos</p>
+          
+          <input type="radio" name="prioridad " [id]="'alta_' + indice" (click)="prioAlta(indice)"><label [for]="'alta_' + indice">Alta</label>
+          <input type="radio" name="prioridad " [id]="'media' + indice" (click)="prioMedia(indice)"><label [for]="'media' + indice">Media</label>
+          <input type="radio" name="prioridad " [id]="'baja' + indice" (click)="prioBaja(indice)"><label [for]="'baja' + indice">Baja</label><br>
+
+          <img src="../assets/completado.png" id="eliminar" class="hecho" (click)="completar(indice)">
+          <img src="../assets/basura.png" id="eliminar" class="eliminar" (click)="eliminar(indice)">
+      </li>
+      </ul>
+    </div>
+    <footer>
+        <button id="limpiar" class="derecha" (click)="limpiar()"> Borrar Historial</button><br>
+        <button id="limpiar" class="izquierda" (click)="eliminarCompletadas()"> Eliminar Completadas</button>
+        <p>Has completado {{this.contadorCompletadas}} tareas</p>
+    </footer>
+</div>
+
+<router-outlet></router-outlet>
